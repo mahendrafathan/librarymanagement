@@ -7,8 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name="petugas")
+@SQLDelete(sql =
+"UPDATE petugas " +
+        "SET deleted = true " +
+        "WHERE id = ?")
+@Where(clause = "deleted = false")
 public class Petugas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +24,7 @@ public class Petugas {
 	private String nama;
 	private String password;
 	private String userName;
+	private boolean deleted;
 	
 	public Petugas() {
 
@@ -59,7 +68,13 @@ public class Petugas {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public boolean isDeleted() {
+        return deleted;
+    }
 
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
 	
 }
