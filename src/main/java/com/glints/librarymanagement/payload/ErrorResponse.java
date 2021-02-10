@@ -3,22 +3,22 @@ package com.glints.librarymanagement.payload;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorResponse {
-	@JsonProperty("error_message")
-	private String errMessage;
-	@JsonProperty("message")
-	private String message;
+    @JsonProperty
+    private String errorMessage;
 
-	public ErrorResponse(String errMessage, String message) {
-		super();
-		this.errMessage = errMessage;
-		this.message = message;
-	}
+    @JsonProperty
+    private String message;
 
-	public void setErrMessage(String errMessage) {
-		this.errMessage = errMessage;
-	}
+    public ErrorResponse(String errorMessage, String message) {
+        this.errorMessage = errorMessage;
+        this.message = message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
