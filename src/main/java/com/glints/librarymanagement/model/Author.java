@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name = "authors")
 @Table(name = "authors")
 public class Author {
 

@@ -20,15 +20,27 @@ public class AuthorController {
     AuthorRepo authorRepo;
 
     @GetMapping(path = "/getall", produces = "application/json")
-    public ResponseEntity<?> getAllAuthor() {
+    public ResponseEntity<?> getAllAuthorActive() {
+        List<Author> authors = authorRepo.findByIsDeleted(false);
+        return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getallauthors", produces = "application/json")
+    public ResponseEntity<?> getAllAuthors() {
         List<Author> authors = authorRepo.findAll();
+        return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getalldeleted", produces = "application/json")
+    public ResponseEntity<?> getAllAuthorDeleted() {
+        List<Author> authors = authorRepo.findByIsDeleted(true);
         return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
     }
 
     @GetMapping(path = "/get/{id}", produces = "application/json")
     public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
         Author author = authorRepo.findById(id).orElse(null);
-        if (author == null) {
+        if (author == null || author.isDeleted() == true) {
             return new ResponseEntity<ErrorResponse>(new ErrorResponse(
                     "Author not available.",
                     "Author tidak tersedia."
@@ -63,7 +75,6 @@ public class AuthorController {
                     "Email harus diisi."
             ), HttpStatus.BAD_REQUEST);
         }
-
         try {
             Date birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(payload.getDateOfBirth());
             Author author = new Author(
@@ -83,7 +94,6 @@ public class AuthorController {
                     "Request anda gagal"
             ), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity<AuthorPayload>(payload, HttpStatus.CREATED);
     }
 
@@ -118,7 +128,6 @@ public class AuthorController {
         if (payload.getAddress() != null) {
             existAuthor.setAddress(payload.getAddress());
         }
-
         try {
             authorRepo.save(existAuthor);
         } catch (Exception e) {
@@ -127,7 +136,6 @@ public class AuthorController {
                     "Request anda gagal"
             ), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity<AuthorPayload>(payload, HttpStatus.ACCEPTED);
     }
 
@@ -146,7 +154,6 @@ public class AuthorController {
                     "Author sudah dihapus."
             ), HttpStatus.FORBIDDEN);
         }
-
         try {
             author.setDeleted(true);
             authorRepo.save(author);
@@ -156,7 +163,6 @@ public class AuthorController {
                     "Request anda gagal"
             ), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity<String>("Delete author success!", HttpStatus.ACCEPTED);
     }
 
@@ -175,7 +181,6 @@ public class AuthorController {
                     "Author aktif, tidak perlu mengurungkan delete kembali."
             ), HttpStatus.FORBIDDEN);
         }
-
         try {
             author.setDeleted(false);
             authorRepo.save(author);
@@ -185,7 +190,6 @@ public class AuthorController {
                     "Request anda gagal"
             ), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity<String>("Undo delete author success!", HttpStatus.ACCEPTED);
     }
 
@@ -204,7 +208,6 @@ public class AuthorController {
                     "Author tidak dapat langsung melakukan penghapusan selamanya."
             ), HttpStatus.FORBIDDEN);
         }
-
         authorRepo.deleteById(id);
         return new ResponseEntity<String>("Delete author success! Author deleted forever!", HttpStatus.ACCEPTED);
     }
