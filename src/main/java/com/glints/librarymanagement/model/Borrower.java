@@ -12,11 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "borrowers")
-public class Borrower {
+@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE book_id = ?")
+@Where(clause = "deleted = false")
+public class Borrower extends Persistence {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,6 +50,8 @@ public class Borrower {
 
 	@Column(name = "is_returned", nullable = false)
 	private Boolean isReturned;
+
+	private boolean deleted;
 
 	public Borrower() {
 		super();
@@ -114,6 +121,14 @@ public class Borrower {
 
 	public void setIsReturned(Boolean isReturned) {
 		this.isReturned = isReturned;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }

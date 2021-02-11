@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.glints.librarymanagement.model.Publisher;
 
 public interface PublisherRepo extends JpaRepository<Publisher, Integer> {
-	Publisher findByPublisherNameIgnoreCase(String name);
+	Publisher findByNameIgnoreCase(String name);
 }
