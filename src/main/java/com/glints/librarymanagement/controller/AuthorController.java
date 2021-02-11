@@ -73,7 +73,8 @@ public class AuthorController {
                     birthDate,
                     payload.getContact(),
                     payload.getEmail(),
-                    payload.getAddress()
+                    payload.getAddress(),
+                    false
             );
             authorRepo.save(author);
         } catch (Exception e) {
@@ -99,14 +100,26 @@ public class AuthorController {
             Date newBirthDate = new SimpleDateFormat("dd/MM/yyyy").parse(payload.getDateOfBirth());
             existAuthor.setDateOfBirth(newBirthDate);
         }
+        if (payload.getFirstname() != null) {
+            existAuthor.setFirstname(payload.getFirstname());
+        }
+        if (payload.getSurname() != null) {
+            existAuthor.setSurname(payload.getSurname());
+        }
+        if (payload.getPlaceOfBirth() != null) {
+            existAuthor.setPlaceOfBirth(payload.getPlaceOfBirth());
+        }
+        if (payload.getContact() != null) {
+            existAuthor.setContact(payload.getContact());
+        }
+        if (payload.getEmail() != null) {
+            existAuthor.setEmail(payload.getEmail());
+        }
+        if (payload.getAddress() != null) {
+            existAuthor.setAddress(payload.getAddress());
+        }
 
         try {
-            existAuthor.setFirstname(payload.getFirstname());
-            existAuthor.setSurname(payload.getSurname());
-            existAuthor.setPlaceOfBirth(payload.getPlaceOfBirth());
-            existAuthor.setContact(payload.getContact());
-            existAuthor.setEmail(payload.getEmail());
-            existAuthor.setAddress(payload.getAddress());
             authorRepo.save(existAuthor);
         } catch (Exception e) {
             return new ResponseEntity<ErrorResponse>(new ErrorResponse(
@@ -127,7 +140,72 @@ public class AuthorController {
                     "Author tidak tersedia."
             ), HttpStatus.NOT_FOUND);
         }
+        if (author.isDeleted() == true) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    "Author has deleted.",
+                    "Author sudah dihapus."
+            ), HttpStatus.FORBIDDEN);
+        }
+
+        try {
+            author.setDeleted(true);
+            authorRepo.save(author);
+        } catch (Exception e) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    e.getMessage(),
+                    "Request anda gagal"
+            ), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<String>("Delete author success!", HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping(path = "/cancel-delete/{id}", produces = "application/json")
+    public ResponseEntity<?> cancelDeleteAuthor(@PathVariable("id") Integer id) {
+        Author author = authorRepo.findById(id).orElse(null);
+        if (author == null) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    "Author not sign, can't delete.",
+                    "Author tidak tersedia."
+            ), HttpStatus.NOT_FOUND);
+        }
+        if (author.isDeleted() == false) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    "Author has active.",
+                    "Author aktif, tidak perlu mengurungkan delete kembali."
+            ), HttpStatus.FORBIDDEN);
+        }
+
+        try {
+            author.setDeleted(false);
+            authorRepo.save(author);
+        } catch (Exception e) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    e.getMessage(),
+                    "Request anda gagal"
+            ), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<String>("Undo delete author success!", HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping(path = "/delete-forever/{id}", produces = "application/json")
+    public ResponseEntity<?> forceDeleteAuthor(@PathVariable("id") Integer id) {
+        Author author = authorRepo.findById(id).orElse(null);
+        if (author == null) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    "Author not sign, can't delete.",
+                    "Author tidak tersedia."
+            ), HttpStatus.NOT_FOUND);
+        }
+        if (author.isDeleted() == false) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(
+                    "Author has active.",
+                    "Author tidak dapat langsung melakukan penghapusan selamanya."
+            ), HttpStatus.FORBIDDEN);
+        }
+
         authorRepo.deleteById(id);
-        return new ResponseEntity<String>("Delete author success!", HttpStatus.OK);
+        return new ResponseEntity<String>("Delete author success! Author deleted forever!", HttpStatus.ACCEPTED);
     }
 }

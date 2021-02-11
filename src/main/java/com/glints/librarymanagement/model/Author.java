@@ -1,10 +1,12 @@
 package com.glints.librarymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "author")
+@Table(name = "authors")
 public class Author {
 
     @Id
@@ -32,6 +34,9 @@ public class Author {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "isDeleted")
+    private boolean isDeleted;
+
 //    @JoinColumn(name = "book_id")
 //    @ManyToMany(targetEntity = Book.class, fetch = FetchType.LAZY)
 //    @JsonIgnore
@@ -40,7 +45,7 @@ public class Author {
     public Author() {
     }
 
-    public Author(String firstname, String surname, String placeOfBirth, Date dateOfBirth, String contact, String email, String address) {
+    public Author(String firstname, String surname, String placeOfBirth, Date dateOfBirth, String contact, String email, String address, boolean isDeleted) {
         this.firstname = firstname;
         this.surname = surname;
         this.placeOfBirth = placeOfBirth;
@@ -48,6 +53,7 @@ public class Author {
         this.contact = contact;
         this.email = email;
         this.address = address;
+        this.isDeleted = isDeleted;
     }
 
     public int getId() {
@@ -112,5 +118,13 @@ public class Author {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
