@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "borrowing")
-public class Borrowing {
+public class Borrower {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,11 +35,11 @@ public class Borrowing {
 	@Column(name = "is_returned", nullable = false)
 	private Boolean isReturned;
 
-	public Borrowing() {
+	public Borrower() {
 		super();
 	}
 
-	public Borrowing(String id, String memberId, String employeeId, String bookId, Date borrowDate, Date returnDate,
+	public Borrower(String id, String memberId, String employeeId, String bookId, Date borrowDate, Date returnDate,
 			Boolean isReturned) {
 		this.id = id;
 		this.memberId = memberId;
