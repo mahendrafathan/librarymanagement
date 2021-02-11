@@ -36,11 +36,6 @@ public class EmployeeController {
 		Optional<Employee> employee = employeeRepo.findById(id);
 		return new ResponseEntity<Optional<Employee>>(employee, HttpStatus.OK);
 	}
-	
-// @GetMapping(path = "/get/{id}")
-//    public Employee getById(@RequestParam int id) {
-//        return employeeRepo.findById(id).get();
-//    }
 	 
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createEmployee(@RequestBody EmployeePayload payload) {
