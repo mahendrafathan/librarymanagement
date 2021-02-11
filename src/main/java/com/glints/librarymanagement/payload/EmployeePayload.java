@@ -29,7 +29,4 @@ public class EmployeePayload {
 	}
 		
 	
-	//CONSTRUCTOR TIDAK PERLU
-	
-	
 }
