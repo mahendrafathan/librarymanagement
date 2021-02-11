@@ -11,28 +11,28 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name="petugas")
+@Table(name="employee")
 @SQLDelete(sql =
-"UPDATE petugas " +
+"UPDATE employee " +
         "SET deleted = true " +
         "WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Petugas {
+public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String nama;
+	private String name;
 	private String password;
 	private String userName;
 	private boolean deleted;
 	
-	public Petugas() {
+	public Employee() {
 
 	}
 
-	public Petugas(String nama, String password, String userName) {
+	public Employee(String name, String password, String userName) {
 		super();
-		this.nama = nama;
+		this.name = name;
 		this.password = password;
 		this.userName = userName;
 	}
@@ -45,12 +45,12 @@ public class Petugas {
 		this.id = id;
 	}
 
-	public String getNama() {
-		return nama;
+	public String getName() {
+		return name;
 	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {
