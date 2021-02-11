@@ -29,7 +29,7 @@ public class MemberController {
 	public ResponseEntity<?> createMember(@RequestBody MemberPayload payload) {
 		
 		try {
-			Member newMember = new Member(payload.getName(), payload.getGender(), payload.getAddress());
+			Member newMember = new Member(payload.getName(), payload.getGender(), payload.getContact(), payload.getAddress());
 			memberRepo.save(newMember);
 		}catch (Exception e) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
@@ -76,6 +76,7 @@ public class MemberController {
 		
 		existMember.setName(payload.getName());
 		existMember.setGender(payload.getGender());
+		existMember.setContact(payload.getContact());
 		existMember.setAddress(payload.getAddress());
 
 		memberRepo.save(existMember);

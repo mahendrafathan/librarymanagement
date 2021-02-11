@@ -19,15 +19,18 @@ public class Member extends Persistence {
 	@Column
 	private String gender;
 	@Column
+	private long contact;
+	@Column
 	private String address;
 	
 	public Member() {
 		super();
 	}
 
-	public Member(String name, String gender, String address) {
+	public Member(String name, String gender, long contact, String address) {
 		this.name = name;
 		this.gender = gender;
+		this.contact = contact;
 		this.address = address;
 	}
 
@@ -53,6 +56,14 @@ public class Member extends Persistence {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public long getContact() {
+		return contact;
+	}
+
+	public void setContact(long contact) {
+		this.contact = contact;
 	}
 
 	public String getAddress() {

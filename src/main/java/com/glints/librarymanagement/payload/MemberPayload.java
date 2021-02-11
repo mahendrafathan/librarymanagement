@@ -7,13 +7,16 @@ public class MemberPayload {
 	private String name;
 	@JsonProperty("gender")
 	private String gender;
+	@JsonProperty("contact")
+	private long contact;
 	@JsonProperty("address")
 	private String address;
 	
-	public MemberPayload(String name, String gender, String address) {
+	public MemberPayload(String name, String gender, long contact,String address) {
 		super();
 		this.name = name;
 		this.gender = gender;
+		this.contact = contact;
 		this.address = address;
 	}
 
@@ -23,6 +26,10 @@ public class MemberPayload {
 
 	public String getGender() {
 		return gender;
+	}
+
+	public long getContact() {
+		return contact;
 	}
 
 	public String getAddress() {
