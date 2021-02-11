@@ -4,27 +4,38 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name = "borrowing")
+@Table(name = "borrowers")
 public class Borrower {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
-	// should be join
-	@Column(name = "member_id", nullable = false)
-	private String memberId;
-	// should be join
-	@Column(name = "employee_id", nullable = false)
-	private String employeeId;
-	// should be join
-	@Column(name = "book_id", nullable = false)
-	private String bookId;
+
+	@JoinColumn(name = "member_id", nullable = false)
+	@ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Member member;
+
+	@JoinColumn(name = "employee_id", nullable = false)
+	@ManyToOne(targetEntity = Petugas.class, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Petugas employee;
+
+	@JoinColumn(name = "book_id", nullable = false)
+	@ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Book book;
 
 	@Column(name = "borrow_date", nullable = false)
 	private Date borrowDate;
@@ -39,12 +50,11 @@ public class Borrower {
 		super();
 	}
 
-	public Borrower(String id, String memberId, String employeeId, String bookId, Date borrowDate, Date returnDate,
+	public Borrower(String id, Member member, Petugas employee, Book book, Date borrowDate, Date returnDate,
 			Boolean isReturned) {
-		this.id = id;
-		this.memberId = memberId;
-		this.employeeId = employeeId;
-		this.bookId = bookId;
+		this.member = member;
+		this.employee = employee;
+		this.book = book;
 		this.borrowDate = borrowDate;
 		this.returnDate = returnDate;
 		this.isReturned = isReturned;
@@ -58,28 +68,28 @@ public class Borrower {
 		this.id = id;
 	}
 
-	public String getMemberId() {
-		return memberId;
+	public Member getMember() {
+		return member;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
-	public String getEmployeeId() {
-		return employeeId;
+	public Petugas getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Petugas employee) {
+		this.employee = employee;
 	}
 
-	public String getBookId() {
-		return bookId;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public Date getBorrowDate() {

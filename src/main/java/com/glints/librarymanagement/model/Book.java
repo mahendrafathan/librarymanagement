@@ -1,123 +1,127 @@
 package com.glints.librarymanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "book")
-@SQLDelete(sql =
-        "UPDATE book " +
-                "SET deleted = true " +
-                "WHERE book_id = ?")
+@Table(name = "books")
+@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE book_id = ?")
 @Where(clause = "deleted = false")
 public class Book extends Persistence {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer book_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer book_id;
 
-    @JoinColumn(name = "author_id", nullable = false)
-    @ManyToOne(targetEntity = Author.class, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Author author;
+	@JoinColumn(name = "author_id", nullable = false)
+	@ManyToOne(targetEntity = Author.class, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Author author;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+	@Column(name = "title", nullable = false)
+	private String title;
 
-    @Column(name = "year", nullable = false)
-    private int year;
+	@Column(name = "year", nullable = false)
+	private int year;
 
-    @JoinColumn(name = "publisher_id", nullable = false)
-    @ManyToOne(targetEntity = Publisher.class, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Publisher publisher;
+	@JoinColumn(name = "publisher_id", nullable = false)
+	@ManyToOne(targetEntity = Publisher.class, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Publisher publisher;
 
-    @Column(name = "category", nullable = false)
-    private String category;
+	@Column(name = "category", nullable = false)
+	private String category;
 
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+	@Column(name = "quantity", nullable = false)
+	private Integer quantity;
 
-    private boolean deleted;
+	private boolean deleted;
 
-    public Book() {
-    }
+	public Book() {
+	}
 
-    public Book(Author author, String title, int year, Publisher publisher, String category, Integer quantity) {
-        this.author = author;
-        this.title = title;
-        this.year = year;
-        this.publisher = publisher;
-        this.category = category;
-        this.quantity = quantity;
-    }
+	public Book(Author author, String title, int year, Publisher publisher, String category, Integer quantity) {
+		this.author = author;
+		this.title = title;
+		this.year = year;
+		this.publisher = publisher;
+		this.category = category;
+		this.quantity = quantity;
+	}
 
-    public Integer getBook_id() {
-        return book_id;
-    }
+	public Integer getBook_id() {
+		return book_id;
+	}
 
-    public void setBook_id(Integer book_id) {
-        this.book_id = book_id;
-    }
+	public void setBook_id(Integer book_id) {
+		this.book_id = book_id;
+	}
 
-    public Author getAuthor() {
-        return author;
-    }
+	public Author getAuthor() {
+		return author;
+	}
 
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public int getYear() {
-        return year;
-    }
+	public int getYear() {
+		return year;
+	}
 
-    public void setYear(int year) {
-        this.year = year;
-    }
+	public void setYear(int year) {
+		this.year = year;
+	}
 
-    public Publisher getPublisher() {
-        return publisher;
-    }
+	public Publisher getPublisher() {
+		return publisher;
+	}
 
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
 
-    public String getCategory() {
-        return category;
-    }
+	public String getCategory() {
+		return category;
+	}
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+	public Integer getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
-    public boolean isDeleted() {
-        return deleted;
-    }
+	public boolean isDeleted() {
+		return deleted;
+	}
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 }

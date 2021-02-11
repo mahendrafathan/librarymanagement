@@ -11,21 +11,25 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name="petugas")
-@SQLDelete(sql =
-"UPDATE petugas " +
-        "SET deleted = true " +
-        "WHERE id = ?")
+@Table(name = "employees")
+@SQLDelete(sql = "UPDATE petugas " + "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Petugas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
+	@Column(name = "name", nullable = false)
 	private String nama;
+
+	@Column(name = "password", nullable = false)
 	private String password;
+
+	@Column(name = "user_name", nullable = false)
 	private String userName;
+
 	private boolean deleted;
-	
+
 	public Petugas() {
 
 	}
@@ -68,13 +72,13 @@ public class Petugas {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public boolean isDeleted() {
-        return deleted;
-    }
+		return deleted;
+	}
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
-	
 }
