@@ -68,13 +68,5 @@ public class Employee {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
 	
 }
