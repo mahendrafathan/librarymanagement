@@ -1,9 +1,9 @@
-package com.glints.librarymanagement.Repository;
+package com.glints.librarymanagement.repository;
 
-import com.glints.librarymanagement.model.Author;
-import com.glints.librarymanagement.model.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.glints.librarymanagement.model.Publisher;
+
 public interface PublisherRepo extends JpaRepository<Publisher, Integer> {
-    Publisher findByPublisherNameIgnoreCase(String name);
+	Publisher findByPublisherNameIgnoreCase(String name);
 }
