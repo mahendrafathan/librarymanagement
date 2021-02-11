@@ -14,60 +14,56 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Persistence {
-	@Column(length = 25)
-	@CreatedBy
-	private String createdBy;
-	
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
+	@Column(length = 50)
 	@CreatedDate
-	private Date createdTime;
-	
-	@Column(length = 25)
-	@LastModifiedBy
-	private String updatedBy;
-	
-	@Column(length = 25)
 	@Temporal(TemporalType.TIMESTAMP)
-	@LastModifiedDate
-	private Date updatedTime;
-
-	public String getCreateBy() {
-		return createdBy;
-	}
-
-	public void setCreateBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedTime() {
-		return createdTime;
-	}
-
-	public void setCreateTime(Date createdTime) {
-		this.createdTime = createdTime;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdateBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	public Date getUpdateTime() {
-		return updatedTime;
-	}
-
-	public void setUpdateTime(Date updatedTime) {
-		this.updatedTime = updatedTime;
-	}
+//	@JsonIgnore
+	private Date createAt;
 	
+	@Column(length = 50)
+	@LastModifiedDate
+	@Temporal(TemporalType.TIMESTAMP)
+//	@JsonIgnore
+	private Date updateAt;
+	
+	@Column(length = 50)
+	@CreatedBy
+	@JsonIgnore
+	private String createBy;
+	
+	@Column(length = 50)
+	@LastModifiedBy
+	@JsonIgnore
+	private String updateBy;
+	
+	public Date getCreateAt() {
+		return createAt;
+	}
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
+	public Date getUpdateAt() {
+		return updateAt;
+	}
+	public void setUpdateAt(Date updateAt) {
+		this.updateAt = updateAt;
+	}
+	public String getCreateBy() {
+		return createBy;
+	}
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+	public String getUpdateBy() {
+		return updateBy;
+	}
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 }
+
