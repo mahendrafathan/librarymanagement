@@ -17,7 +17,7 @@ import org.hibernate.annotations.Where;
         "SET deleted = true " +
         "WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Employee {
+public class Employee extends Persistence{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
