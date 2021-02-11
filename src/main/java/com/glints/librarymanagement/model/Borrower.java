@@ -25,7 +25,7 @@ public class Borrower extends Persistence {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private Long id;
 
 	@JoinColumn(name = "member_id", nullable = false)
 	@ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
@@ -42,13 +42,13 @@ public class Borrower extends Persistence {
 	@JsonIgnore
 	private Book book;
 
-	@Column(name = "borrow_date", nullable = false)
+	@Column(name = "borrow_date")
 	private Date borrowDate;
 
-	@Column(name = "return_date", nullable = false)
+	@Column(name = "return_date")
 	private Date returnDate;
 
-	@Column(name = "is_returned", nullable = false)
+	@Column(name = "is_returned")
 	private Boolean isReturned;
 
 	private boolean deleted;
@@ -57,7 +57,7 @@ public class Borrower extends Persistence {
 		super();
 	}
 
-	public Borrower(String id, Member member, Petugas employee, Book book, Date borrowDate, Date returnDate,
+	public Borrower(Long id, Member member, Petugas employee, Book book, Date borrowDate, Date returnDate,
 			Boolean isReturned) {
 		this.member = member;
 		this.employee = employee;
@@ -67,11 +67,11 @@ public class Borrower extends Persistence {
 		this.isReturned = isReturned;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

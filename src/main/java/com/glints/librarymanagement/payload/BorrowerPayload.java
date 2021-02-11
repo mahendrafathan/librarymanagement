@@ -1,26 +1,34 @@
 package com.glints.librarymanagement.payload;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BorrowerPayload {
 
 	@JsonProperty("member")
-	private String memberId;
+	private String member;
 	@JsonProperty("employee")
-	private String employeeId;
+	private String employee;
 	@JsonProperty("book")
-	private String bookId;
+	private String book;
+	@JsonProperty("return_date")
+	private Date returnDate;
 
-	public String getMemberId() {
-		return memberId;
+	public String getMember() {
+		return member;
 	}
 
-	public String getEmployeeId() {
-		return employeeId;
+	public String getEmployee() {
+		return employee;
 	}
 
-	public String getBookId() {
-		return bookId;
+	public String getBook() {
+		return book;
+	}
+
+	public Date getReturnDate() {
+		return returnDate;
 	}
 
 }
