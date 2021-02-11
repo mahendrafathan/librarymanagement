@@ -8,21 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "member")
+@Table(name = "members")
 public class Member extends Persistence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
 	private int id;
-	@Column
+
+	@Column(name = "name", nullable = false)
 	private String name;
-	@Column
+	@Column(name = "gender", nullable = false)
 	private String gender;
-	@Column
+	@Column(name = "contact", nullable = false)
 	private long contact;
-	@Column
+	@Column(name = "address", nullable = false)
 	private String address;
-	
+
 	public Member() {
 		super();
 	}

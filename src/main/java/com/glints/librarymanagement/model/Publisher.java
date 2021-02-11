@@ -1,37 +1,52 @@
 package com.glints.librarymanagement.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "publisher")
+@Table(name = "publishers")
 public class Publisher extends Persistence {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long publisher_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long publisher_id;
 
-    @Column(name = "publisher_name")
-    private String publisherName;
+	@Column(name = "name")
+	private String name;
 
-    public Publisher() {}
+	@Column(name = "address")
+	private String address;
 
-    public Publisher(String publisher_name) {
-        this.publisherName = publisher_name;
-    }
+	@Column(name = "contact")
+	private String contact;
 
-    public Long getPublisher_id() {
-        return publisher_id;
-    }
+	@Column(name = "email")
+	private String email;
 
-    public void setPublisher_id(Long publisher_id) {
-        this.publisher_id = publisher_id;
-    }
+	public Publisher() {
+	}
 
-    public String getPublisherName() {
-        return publisherName;
-    }
+	public Publisher(String publisher_name) {
+		this.name = publisher_name;
+	}
 
-    public void setPublisherName(String publisherName) {
-        this.publisherName = publisherName;
-    }
+	public Long getPublisher_id() {
+		return publisher_id;
+	}
+
+	public void setPublisher_id(Long publisher_id) {
+		this.publisher_id = publisher_id;
+	}
+
+	public String getPublisherName() {
+		return name;
+	}
+
+	public void setPublisherName(String publisherName) {
+		this.name = publisherName;
+	}
 }

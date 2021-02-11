@@ -66,4 +66,3 @@ public class Persistence {
 		this.updateBy = updateBy;
 	}
 }
-
