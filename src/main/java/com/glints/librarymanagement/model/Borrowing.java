@@ -18,13 +18,13 @@ import org.hibernate.annotations.Where;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "borrowers")
-@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE book_id = ?")
+@Table(name = "borrowing")
+@SQLDelete(sql = "UPDATE borrowing " + "SET deleted = true " + "WHERE book_id = ?")
 @Where(clause = "deleted = false")
-public class Borrower extends Persistence {
+public class Borrowing extends Persistence {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 
 	@JoinColumn(name = "member_id", nullable = false)
@@ -33,9 +33,9 @@ public class Borrower extends Persistence {
 	private Member member;
 
 	@JoinColumn(name = "employee_id", nullable = false)
-	@ManyToOne(targetEntity = Petugas.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Petugas employee;
+	private Employee employee;
 
 	@JoinColumn(name = "book_id", nullable = false)
 	@ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY)
@@ -51,14 +51,14 @@ public class Borrower extends Persistence {
 	@Column(name = "is_returned", nullable = false)
 	private Boolean isReturned;
 
+	@Column(name = "deleted")
 	private boolean deleted;
 
-	public Borrower() {
+	public Borrowing() {
 		super();
 	}
 
-	public Borrower(String id, Member member, Petugas employee, Book book, Date borrowDate, Date returnDate,
-			Boolean isReturned) {
+	public Borrowing(String id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate, Boolean isReturned) {
 		this.member = member;
 		this.employee = employee;
 		this.book = book;
@@ -83,11 +83,11 @@ public class Borrower extends Persistence {
 		this.member = member;
 	}
 
-	public Petugas getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Petugas employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 

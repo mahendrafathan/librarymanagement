@@ -16,13 +16,13 @@ import org.hibernate.annotations.Where;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 @SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE book_id = ?")
 @Where(clause = "deleted = false")
 public class Book extends Persistence {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer book_id;
 
 	@JoinColumn(name = "author_id", nullable = false)
@@ -47,6 +47,7 @@ public class Book extends Persistence {
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
 
+	@Column(name = "deleted")
 	private boolean deleted;
 
 	public Book() {
