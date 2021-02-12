@@ -125,7 +125,7 @@ public class BorrowerController {
 	@DeleteMapping(path = "/cancel-delete/{id}", produces = "application/json")
 	public ResponseEntity<?> cancelDeleteAuthor(@PathVariable("id") Long id) {
 		Borrower borrower = borrowerRepo.findById(id).orElse(null);
-		if (borrower.isDeleted() == true) {
+		if (borrower == null) {
 			return new ResponseEntity<ErrorResponse>(
 					new ErrorResponse("Borrower not found", "Data borrower tidak ditemukan."), HttpStatus.NOT_FOUND);
 
