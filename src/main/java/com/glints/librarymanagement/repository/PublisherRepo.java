@@ -7,5 +7,4 @@ import com.glints.librarymanagement.model.Publisher;
 
 public interface PublisherRepo extends JpaRepository<Publisher, Integer> {
 	Publisher findByNameIgnoreCase(String name);
-
 }

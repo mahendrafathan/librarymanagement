@@ -8,13 +8,13 @@ public class PublisherPayload {
 	@JsonProperty("address")
 	private String address;
 	@JsonProperty("contact")
-	private long contact;
+	private String contact;
 	@JsonProperty("email")
 	private String email;
 	public PublisherPayload() {
 		super();
 	}
-	public PublisherPayload(String name, String address, long contact, String email) {
+	public PublisherPayload(String name, String address, String contact, String email) {
 		super();
 		this.name = name;
 		this.address = address;
@@ -27,7 +27,7 @@ public class PublisherPayload {
 	public String getAddress() {
 		return address;
 	}
-	public long getContact() {
+	public String getContact() {
 		return contact;
 	}
 	public String getEmail() {
