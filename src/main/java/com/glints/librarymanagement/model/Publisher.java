@@ -82,4 +82,5 @@ public class Publisher extends Persistence {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+
 }
