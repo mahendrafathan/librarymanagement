@@ -18,7 +18,6 @@ import com.glints.librarymanagement.model.Book;
 import com.glints.librarymanagement.model.Borrower;
 import com.glints.librarymanagement.model.Member;
 import com.glints.librarymanagement.model.Petugas;
-import com.glints.librarymanagement.payload.AuthorPayload;
 import com.glints.librarymanagement.payload.BorrowerPayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
 import com.glints.librarymanagement.repository.BookRepo;
@@ -100,7 +99,7 @@ public class BorrowerController {
 		return new ResponseEntity<BorrowerPayload>(payload, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping(path = "/delete/{id}", produces = "application/json")
+	@DeleteMapping(path = "/soft-delete/{id}", produces = "application/json")
 	public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id) {
 		Borrower borrower = borrowerRepo.findById(id).orElse(null);
 		if (borrower == null) {
@@ -126,9 +125,10 @@ public class BorrowerController {
 	@DeleteMapping(path = "/cancel-delete/{id}", produces = "application/json")
 	public ResponseEntity<?> cancelDeleteAuthor(@PathVariable("id") Long id) {
 		Borrower borrower = borrowerRepo.findById(id).orElse(null);
-		if (borrower == null) {
+		if (borrower.isDeleted() == true) {
 			return new ResponseEntity<ErrorResponse>(
 					new ErrorResponse("Borrower not found", "Data borrower tidak ditemukan."), HttpStatus.NOT_FOUND);
+
 		}
 		if (borrower.isDeleted() == false) {
 			return new ResponseEntity<ErrorResponse>(
@@ -147,7 +147,7 @@ public class BorrowerController {
 		return new ResponseEntity<String>("Undo delete borrower success!", HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping(path = "/delete-permanent/{id}", produces = "application/json")
+	@DeleteMapping(path = "/permanent-delete/{id}", produces = "application/json")
 	public ResponseEntity<?> forceDeleteAuthor(@PathVariable("id") Long id) {
 		Borrower borrower = borrowerRepo.findById(id).orElse(null);
 		if (borrower == null) {
@@ -165,8 +165,8 @@ public class BorrowerController {
 				HttpStatus.ACCEPTED);
 	}
 
-	@PutMapping(path = "/return/status/{id}", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<?> updateIsReturned(@PathVariable("id") Long id, @RequestBody AuthorPayload payload)
+	@PutMapping(path = "/return-status/{id}", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<?> updateIsReturned(@PathVariable("id") Long id, @RequestBody BorrowerPayload payload)
 			throws Exception {
 		Borrower existBorrower = borrowerRepo.findById(id).orElse(null);
 		if (existBorrower == null) {
@@ -182,7 +182,7 @@ public class BorrowerController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<AuthorPayload>(payload, HttpStatus.ACCEPTED);
+		return new ResponseEntity<BorrowerPayload>(payload, HttpStatus.ACCEPTED);
 	}
 
 }
