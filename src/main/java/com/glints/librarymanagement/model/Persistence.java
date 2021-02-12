@@ -17,6 +17,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -31,22 +33,26 @@ import lombok.Setter;
 public class Persistence {
 	@Column(length = 25)
 	@CreatedBy
+	@JsonIgnore
 	private String createBy;
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	@CreationTimestamp
+	@JsonIgnore
 	private Date createTime;
 
 	@Column(length = 25)
 	@LastModifiedBy
+	@JsonIgnore
 	private String updateBy;
 
 	@Column(length = 25)
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	@UpdateTimestamp
+	@JsonIgnore
 	private Date updateTime;
 
 	public String getCreateBy() {

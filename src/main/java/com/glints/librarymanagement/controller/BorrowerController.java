@@ -43,7 +43,8 @@ public class BorrowerController {
 
 	@GetMapping(path = "/get", produces = "application/json")
 	public ResponseEntity<?> getAll() {
-		List<Borrower> borrower = borrowerRepo.findAll();
+//		List<Borrower> borrower = borrowerRepo.findAll();
+		List<Borrower> borrower = borrowerRepo.findAllJoin();
 		return new ResponseEntity<List<Borrower>>(borrower, HttpStatus.OK);
 	}
 
