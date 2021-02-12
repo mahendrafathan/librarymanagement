@@ -2,7 +2,7 @@ package com.glints.librarymanagement.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class BorrowerPayload {
+public class BorrowingPayload {
 
 	@JsonProperty("member")
 	private String memberId;

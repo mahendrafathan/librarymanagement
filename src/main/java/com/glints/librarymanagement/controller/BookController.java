@@ -1,6 +1,5 @@
 package com.glints.librarymanagement.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class BookController {
 		List<Book> book = bookRepo.findAll();
 		List<BookPayload> response = new ArrayList<BookPayload>();
 		for (Book books : book) {
-			response.add(new BookPayload(books.getAuthor().getFirstname(), books.getTitle(),
+			response.add(new BookPayload(books.getId(), books.getAuthor().getFirstname(), books.getTitle(),
 					books.getYear(), books.getPublisher().getName(), books.getCategory(),
 					books.getQuantity()));
 		}
@@ -60,7 +59,7 @@ public class BookController {
 		}
 
 		Book book = bookRepo.findById(id).orElse(null);
-		BookPayload products = new BookPayload(book.getAuthor().getFirstname(), book.getTitle(),
+		BookPayload products = new BookPayload(book.getId(), book.getAuthor().getFirstname(), book.getTitle(),
 				book.getYear(), book.getPublisher().getName(), book.getCategory(), book.getQuantity());
 		return new ResponseEntity<BookPayload>(products, HttpStatus.OK);
 	}
@@ -82,7 +81,7 @@ public class BookController {
 		}
 
 		try {
-			Book newBook = new Book(author, payload.getTitle(), payload.getYear(), publisher, payload.getCategory(),
+			Book newBook = new Book(payload.getId(), author, payload.getTitle(), payload.getYear(), publisher, payload.getCategory(),
 					payload.getQuantity());
 			bookRepo.save(newBook);
 		} catch (Exception e) {
@@ -126,8 +125,8 @@ public class BookController {
 		return new ResponseEntity<BookPayload>(payload, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping(path = "/delete/{id}", produces = "application/json")
-	public ResponseEntity<?> deleteProduct(@PathVariable("id") Integer id) throws SQLException {
+	@DeleteMapping(path = "/delete/{id}")
+	public ResponseEntity<?> deleteProduct(@PathVariable("id") Integer id) {
 		Book bookExist = bookRepo.findById(id).orElse(null);
 		if (bookExist == null) {
 			return new ResponseEntity<ErrorResponse>(

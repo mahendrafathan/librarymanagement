@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "borrowing")
-@SQLDelete(sql = "UPDATE borrowing " + "SET deleted = true " + "WHERE book_id = ?")
+@SQLDelete(sql = "UPDATE borrowing " + "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Borrowing extends Persistence {
 

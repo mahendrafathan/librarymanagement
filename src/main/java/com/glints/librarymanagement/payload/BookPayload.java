@@ -3,6 +3,9 @@ package com.glints.librarymanagement.payload;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BookPayload {
+	@JsonProperty
+	private Integer id;
+	
     @JsonProperty
     private String author;
 
@@ -21,7 +24,8 @@ public class BookPayload {
     @JsonProperty
     private Integer quantity;
 
-    public BookPayload(String author, String title, int year, String publisher, String category,  Integer quantity) {
+    public BookPayload(Integer id, String author, String title, int year, String publisher, String category,  Integer quantity) {
+    	this.id = id;
         this.author = author;
         this.title = title;
         this.year = year;
@@ -29,8 +33,12 @@ public class BookPayload {
         this.category = category;
         this.quantity = quantity;
     }
+    
+    public Integer getId() {
+		return id;
+	}
 
-    public String getAuthor() {
+	public String getAuthor() {
         return author;
     }
 

@@ -9,7 +9,7 @@ public class EmployeePayload {
 	private String name;
 	@JsonProperty("password")
 	private String password;
-	@JsonProperty("userName")
+	@JsonProperty("user_name")
 	private String userName;
 	//GETTER
 	public int getId() {

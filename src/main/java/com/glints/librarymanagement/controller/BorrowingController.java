@@ -1,5 +1,5 @@
 package com.glints.librarymanagement.controller;
 
-public class BorrowerController {
+public class BorrowingController {
 
 }

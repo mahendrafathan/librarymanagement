@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "book")
-@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE book_id = ?")
+@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Book extends Persistence {
 
@@ -53,7 +53,8 @@ public class Book extends Persistence {
 	public Book() {
 	}
 
-	public Book(Author author, String title, int year, Publisher publisher, String category, Integer quantity) {
+	public Book(Integer id, Author author, String title, int year, Publisher publisher, String category, Integer quantity) {
+		this.id = id;
 		this.author = author;
 		this.title = title;
 		this.year = year;

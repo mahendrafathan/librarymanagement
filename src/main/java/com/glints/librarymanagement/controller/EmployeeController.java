@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.glints.librarymanagement.model.Employee;
@@ -43,9 +42,9 @@ public class EmployeeController {
 		if(existEmployee != null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
 					"Already exist",
-					"Ganti dengan nama lain"),HttpStatus.BAD_REQUEST);					
-						
+					"Ganti dengan nama lain"),HttpStatus.BAD_REQUEST);							
 		}
+		
 		try {
 			Employee newEmployee = new Employee(
 					payload.getName(), 
@@ -55,7 +54,6 @@ public class EmployeeController {
 			payload.setId(newEmployee.getId());
 		} catch (Exception e){
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(					
-					
 					"Error",
 					"Maaf request anda tidak dapat diproses"),HttpStatus.INTERNAL_SERVER_ERROR);					
 				

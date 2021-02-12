@@ -33,6 +33,4 @@ public class PublisherPayload {
 	public String getEmail() {
 		return email;
 	}
-	
-	
 }
