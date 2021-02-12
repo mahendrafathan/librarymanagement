@@ -23,7 +23,7 @@ public class Book extends Persistence {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer book_id;
+	private Integer id;
 
 	@JoinColumn(name = "author_id", nullable = false)
 	@ManyToOne(targetEntity = Author.class, fetch = FetchType.LAZY)
@@ -62,12 +62,12 @@ public class Book extends Persistence {
 		this.quantity = quantity;
 	}
 
-	public Integer getBook_id() {
-		return book_id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setBook_id(Integer book_id) {
-		this.book_id = book_id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Author getAuthor() {
