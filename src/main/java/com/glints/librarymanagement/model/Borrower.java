@@ -50,7 +50,7 @@ public class Borrower extends Persistence {
 
 	@Column(name = "is_returned")
 	private Boolean isReturned;
-
+	@JsonIgnore
 	private boolean deleted;
 
 	public Borrower() {

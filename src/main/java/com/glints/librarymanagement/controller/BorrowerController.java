@@ -83,9 +83,9 @@ public class BorrowerController {
 			updateBook.setQuantity(updateBook.getQuantity() - 1);
 			bookRepo.save(updateBook);
 
-			Borrower newBorrow = new Borrower(null, member, employee, book, null, null, null);
-//			newBorrow.setBorrowDate(new Date());
-//			newBorrower.setReturnDate(new Date());
+			Borrower newBorrow = new Borrower(null, member, employee, book, payload.getBorrowDate(),
+					payload.getReturnDate(), null);
+			newBorrow.setIsReturned(false);
 			borrowerRepo.save(newBorrow);
 
 		} catch (Exception e) {
