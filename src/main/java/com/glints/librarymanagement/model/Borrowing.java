@@ -25,7 +25,7 @@ public class Borrowing extends Persistence {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private int id;
 
 	@JoinColumn(name = "member_id", nullable = false)
 	@ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
@@ -58,7 +58,7 @@ public class Borrowing extends Persistence {
 		super();
 	}
 
-	public Borrowing(String id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate, Boolean isReturned) {
+	public Borrowing(int id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate, Boolean isReturned) {
 		this.member = member;
 		this.employee = employee;
 		this.book = book;
@@ -67,11 +67,11 @@ public class Borrowing extends Persistence {
 		this.isReturned = isReturned;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
