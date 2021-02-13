@@ -84,6 +84,7 @@ public class BookController {
 			Book newBook = new Book(payload.getId(), author, payload.getTitle(), payload.getYear(), publisher, payload.getCategory(),
 					payload.getQuantity());
 			bookRepo.save(newBook);
+			payload.setId(newBook.getId());
 		} catch (Exception e) {
 			return new ResponseEntity<ErrorResponse>(
 					new ErrorResponse(e.getMessage(), "maaf request anda tidak dapat diproses"),
@@ -122,6 +123,7 @@ public class BookController {
 		bookExist.setCategory(payload.getCategory());
 		
 		bookRepo.save(bookExist);
+		payload.setId(bookExist.getId());
 		return new ResponseEntity<BookPayload>(payload, HttpStatus.CREATED);
 	}
 
