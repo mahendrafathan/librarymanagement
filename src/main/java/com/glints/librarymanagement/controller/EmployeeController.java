@@ -12,82 +12,75 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.glints.librarymanagement.model.Petugas;
-import com.glints.librarymanagement.payload.PetugasPayload;
+import com.glints.librarymanagement.model.Employee;
+import com.glints.librarymanagement.payload.EmployeePayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
-import com.glints.librarymanagement.repository.PetugasRepo;
+import com.glints.librarymanagement.repository.EmployeeRepo;
 
 @RestController
-@RequestMapping(path = "/petugas")
-public class PetugasController {
+@RequestMapping(path = "/employee")
+public class EmployeeController {
 	@Autowired
-	PetugasRepo petugasRepo;
+	EmployeeRepo employeeRepo;
 	@GetMapping(path = "/getall", produces = "application/json")
 	public ResponseEntity<?> getAll(){
-		List <Petugas> petugas = petugasRepo.findAll();
-		return new ResponseEntity<List<Petugas>>(petugas, HttpStatus.OK);		
+		List <Employee> employee = employeeRepo.findAll();
+		return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);		
 	}
 	
 	@GetMapping(path = "/get/{id}", produces = "application/json")
 	public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
-		Optional<Petugas> petugas = petugasRepo.findById(id);
-		return new ResponseEntity<Optional<Petugas>>(petugas, HttpStatus.OK);
+		Optional<Employee> employee = employeeRepo.findById(id);
+		return new ResponseEntity<Optional<Employee>>(employee, HttpStatus.OK);
 	}
-	
-// @GetMapping(path = "/get/{id}")
-//    public Petugas getById(@RequestParam int id) {
-//        return petugasRepo.findById(id).get();
-//    }
 	 
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<?> createPetugas(@RequestBody PetugasPayload payload) {
-		Petugas existPetugas = petugasRepo.findByNamaIgnoreCase(payload.getNama());
-		if(existPetugas != null) {
+	public ResponseEntity<?> createEmployee(@RequestBody EmployeePayload payload) {
+		Employee existEmployee = employeeRepo.findByNameIgnoreCase(payload.getName());
+		if(existEmployee != null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
 					"Already exist",
-					"Ganti dengan nama lain"),HttpStatus.BAD_REQUEST);					
-						
+					"Ganti dengan nama lain"),HttpStatus.BAD_REQUEST);							
 		}
+		
 		try {
-			Petugas newPetugas = new Petugas(
-					payload.getNama(), 
+			Employee newEmployee = new Employee(
+					payload.getName(), 
 					payload.getPassword(), 
 					payload.getUserName());
-			petugasRepo.save(newPetugas);
-			payload.setId(newPetugas.getId());
+			employeeRepo.save(newEmployee);
+			payload.setId(newEmployee.getId());
 		} catch (Exception e){
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(					
-					
 					"Error",
 					"Maaf request anda tidak dapat diproses"),HttpStatus.INTERNAL_SERVER_ERROR);					
 				
 		}
-		return new ResponseEntity<PetugasPayload>(payload, HttpStatus.CREATED);
+		return new ResponseEntity<EmployeePayload>(payload, HttpStatus.CREATED);
 	}
 	
 	@PostMapping(path = "/update/{id}", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<?> createPetugas(@PathVariable("id") Integer id, @RequestBody PetugasPayload payload) {
-		Petugas existPetugas = petugasRepo.findById(id).orElse(null);;
-		if(existPetugas == null) {
+	public ResponseEntity<?> createEmployee(@PathVariable("id") Integer id, @RequestBody EmployeePayload payload) {
+		Employee existEmployee = employeeRepo.findById(id).orElse(null);;
+		if(existEmployee == null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
-					"Petugas not found",
+					"Employee not found",
 					"update data failed"),HttpStatus.BAD_REQUEST);					
 						
 		}
-		existPetugas.setNama(payload.getNama());
-		existPetugas.setPassword(payload.getPassword());
-		existPetugas.setUserName(payload.getUserName());
-		petugasRepo.save(existPetugas);
-		payload.setId(existPetugas.getId());
-		return new ResponseEntity<PetugasPayload>(payload, HttpStatus.CREATED);
+		existEmployee.setName(payload.getName());
+		existEmployee.setPassword(payload.getPassword());
+		existEmployee.setUserName(payload.getUserName());
+		employeeRepo.save(existEmployee);
+		payload.setId(existEmployee.getId());
+		return new ResponseEntity<EmployeePayload>(payload, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(path = "/delete/{id}", produces="application/json")
 	public ResponseEntity<?> deleteById(@PathVariable("id") Integer id){
-		petugasRepo.deleteById(id);
+		employeeRepo.deleteById(id);
 		return new ResponseEntity<String>("success deleted data where id: " + id, HttpStatus.OK);
 	}
 }

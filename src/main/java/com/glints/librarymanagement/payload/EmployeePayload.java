@@ -2,21 +2,21 @@ package com.glints.librarymanagement.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PetugasPayload {
+public class EmployeePayload {
 	@JsonProperty("id")
 	private int id;
-	@JsonProperty("nama")
-	private String nama;
+	@JsonProperty("name")
+	private String name;
 	@JsonProperty("password")
 	private String password;
-	@JsonProperty("userName")
+	@JsonProperty("user_name")
 	private String userName;
 	//GETTER
 	public int getId() {
 		return id;
 	}
-	public String getNama() {
-		return nama;
+	public String getName() {
+		return name;
 	}
 	public String getPassword() {
 		return password;
@@ -28,8 +28,5 @@ public class PetugasPayload {
 		this.id = id;
 	}
 		
-	
-	//CONSTRUCTOR TIDAK PERLU
-	
 	
 }

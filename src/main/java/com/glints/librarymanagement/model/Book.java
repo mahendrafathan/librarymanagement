@@ -16,14 +16,14 @@ import org.hibernate.annotations.Where;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "books")
-@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE book_id = ?")
+@Table(name = "book")
+@SQLDelete(sql = "UPDATE book " + "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Book extends Persistence {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer book_id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	@JoinColumn(name = "author_id", nullable = false)
 	@ManyToOne(targetEntity = Author.class, fetch = FetchType.LAZY)
@@ -47,12 +47,14 @@ public class Book extends Persistence {
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
 
+	@Column(name = "deleted")
 	private boolean deleted;
 
 	public Book() {
 	}
 
-	public Book(Author author, String title, int year, Publisher publisher, String category, Integer quantity) {
+	public Book(Integer id, Author author, String title, int year, Publisher publisher, String category, Integer quantity) {
+		this.id = id;
 		this.author = author;
 		this.title = title;
 		this.year = year;
@@ -61,12 +63,12 @@ public class Book extends Persistence {
 		this.quantity = quantity;
 	}
 
-	public Integer getBook_id() {
-		return book_id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setBook_id(Integer book_id) {
-		this.book_id = book_id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Author getAuthor() {

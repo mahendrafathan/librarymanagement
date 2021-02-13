@@ -11,32 +11,32 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "employees")
-@SQLDelete(sql = "UPDATE petugas " + "SET deleted = true " + "WHERE id = ?")
+@Table(name="employee")
+@SQLDelete(sql = "UPDATE employee " + "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
-public class Petugas {
+public class Employee extends Persistence{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	@Column(name = "name", nullable = false)
-	private String nama;
-
-	@Column(name = "password", nullable = false)
+	
+	@Column(name = "name")
+	private String name;
+	
+	@Column(name = "password")
 	private String password;
-
-	@Column(name = "user_name", nullable = false)
+	
+	@Column(name = "user_name")
 	private String userName;
-
+	
+	@Column(name = "deleted")
 	private boolean deleted;
-
-	public Petugas() {
-
+	
+	public Employee() {
+		super();
 	}
 
-	public Petugas(String nama, String password, String userName) {
-		super();
-		this.nama = nama;
+	public Employee(String name, String password, String userName) {
+		this.name = name;
 		this.password = password;
 		this.userName = userName;
 	}
@@ -49,12 +49,12 @@ public class Petugas {
 		this.id = id;
 	}
 
-	public String getNama() {
-		return nama;
+	public String getName() {
+		return name;
 	}
 
-	public void setNama(String nama) {
-		this.nama = nama;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {
@@ -80,5 +80,4 @@ public class Petugas {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-
 }

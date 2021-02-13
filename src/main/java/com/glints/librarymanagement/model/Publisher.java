@@ -7,13 +7,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
-@Table(name = "publishers")
+@Table(name = "publisher")
+@SQLDelete(sql = "UPDATE publisher " + "SET deleted = true " + "WHERE id = ?")
+@Where(clause = "deleted = false")
 public class Publisher extends Persistence {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long publisher_id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	@Column(name = "name")
 	private String name;
@@ -26,27 +31,56 @@ public class Publisher extends Persistence {
 
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "deleted")
+	private boolean deleted;
 
 	public Publisher() {
+		super();
 	}
-
-	public Publisher(String publisher_name) {
-		this.name = publisher_name;
+	
+	public Publisher(String name, String address, String contact, String email) {
+		this.name = name;
+		this.address = address;
+		this.contact = contact;
+		this.email = email;
 	}
-
-	public Long getPublisher_id() {
-		return publisher_id;
+	
+	public int getId() {
+		return id;
 	}
-
-	public void setPublisher_id(Long publisher_id) {
-		this.publisher_id = publisher_id;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public String getPublisherName() {
+	public String getName() {
 		return name;
 	}
-
-	public void setPublisherName(String publisherName) {
-		this.name = publisherName;
+	public void setName(String name) {
+		this.name = name;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 }

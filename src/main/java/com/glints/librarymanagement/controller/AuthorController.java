@@ -67,7 +67,7 @@ public class AuthorController {
 		try {
 			Date birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(payload.getDateOfBirth());
 			Author author = new Author(payload.getFirstname(), payload.getSurname(), payload.getPlaceOfBirth(),
-					birthDate, payload.getContact(), payload.getEmail(), payload.getAddress(), false);
+					birthDate, payload.getContact(), payload.getEmail(), payload.getAddress());
 			authorRepo.save(author);
 		} catch (Exception e) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(e.getMessage(), "Request anda gagal"),
