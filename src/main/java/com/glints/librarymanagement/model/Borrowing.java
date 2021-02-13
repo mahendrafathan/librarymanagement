@@ -24,8 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Borrowing extends Persistence {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@JoinColumn(name = "member_id", nullable = false)
 	@ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
@@ -42,23 +42,23 @@ public class Borrowing extends Persistence {
 	@JsonIgnore
 	private Book book;
 
-	@Column(name = "borrow_date", nullable = false)
+	@Column(name = "borrow_date")
 	private Date borrowDate;
 
-	@Column(name = "return_date", nullable = false)
+	@Column(name = "return_date")
 	private Date returnDate;
 
-	@Column(name = "is_returned", nullable = false)
+	@Column(name = "is_returned")
 	private Boolean isReturned;
 
-	@Column(name = "deleted")
 	private boolean deleted;
 
 	public Borrowing() {
 		super();
 	}
 
-	public Borrowing(String id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate, Boolean isReturned) {
+	public Borrowing(Long id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate,
+			Boolean isReturned) {
 		this.member = member;
 		this.employee = employee;
 		this.book = book;
@@ -67,11 +67,11 @@ public class Borrowing extends Persistence {
 		this.isReturned = isReturned;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
