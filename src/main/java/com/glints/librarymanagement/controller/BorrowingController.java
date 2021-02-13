@@ -162,8 +162,7 @@ public class BorrowingController {
 		}
 
 		borrowingRepo.deleteById(id);
-		return new ResponseEntity<String>("Delete borrower data success! borrower deleted permanent!",
-				HttpStatus.ACCEPTED);
+		return new ResponseEntity<String>("success deleted data borrowing where id: " + id, HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping(path = "/return-status/{id}", consumes = "application/json", produces = "application/json")
@@ -182,7 +181,7 @@ public class BorrowingController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<BorrowingPayload>(payload, HttpStatus.ACCEPTED);
+		return new ResponseEntity<String>("Book with id: " + id + "is returned", HttpStatus.ACCEPTED);
 	}
 
 }
