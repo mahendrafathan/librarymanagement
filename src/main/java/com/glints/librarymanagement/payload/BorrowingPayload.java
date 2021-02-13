@@ -1,26 +1,46 @@
 package com.glints.librarymanagement.payload;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BorrowingPayload {
 
 	@JsonProperty("member")
-	private String memberId;
+	private String member;
 	@JsonProperty("employee")
-	private String employeeId;
+	private String employee;
 	@JsonProperty("book")
-	private String bookId;
+	private String book;
+	@JsonProperty("borrow_date")
+	private Date borrowDate;
+	@JsonProperty("return_date")
+	private Date returnDate;
 
-	public String getMemberId() {
-		return memberId;
+	// declare current date
+	Date currentDate = new Date();
+	// make 3 days from current date
+	Date dayAfter = new Date(currentDate.getTime() + TimeUnit.DAYS.toMillis(4));
+
+	public String getMember() {
+		return member;
 	}
 
-	public String getEmployeeId() {
-		return employeeId;
+	public String getEmployee() {
+		return employee;
 	}
 
-	public String getBookId() {
-		return bookId;
+	public String getBook() {
+		return book;
+	}
+
+	public Date getBorrowDate() {
+		return currentDate;
+	}
+
+	public Date getReturnDate() {
+		return dayAfter;
 	}
 
 }
