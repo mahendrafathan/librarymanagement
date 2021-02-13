@@ -33,9 +33,9 @@ public class Borrower extends Persistence {
 	private Member member;
 
 	@JoinColumn(name = "employee_id", nullable = false)
-	@ManyToOne(targetEntity = Petugas.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Petugas employee;
+	private Employee employee;
 
 	@JoinColumn(name = "book_id", nullable = false)
 	@ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY)
@@ -57,7 +57,7 @@ public class Borrower extends Persistence {
 		super();
 	}
 
-	public Borrower(Long id, Member member, Petugas employee, Book book, Date borrowDate, Date returnDate,
+	public Borrower(Long id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate,
 			Boolean isReturned) {
 		this.member = member;
 		this.employee = employee;
@@ -83,11 +83,11 @@ public class Borrower extends Persistence {
 		this.member = member;
 	}
 
-	public Petugas getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Petugas employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 

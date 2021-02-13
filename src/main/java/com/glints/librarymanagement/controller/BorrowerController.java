@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.glints.librarymanagement.model.Book;
 import com.glints.librarymanagement.model.Borrower;
+import com.glints.librarymanagement.model.Employee;
 import com.glints.librarymanagement.model.Member;
-import com.glints.librarymanagement.model.Petugas;
 import com.glints.librarymanagement.payload.BorrowerPayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
 import com.glints.librarymanagement.repository.BookRepo;
 import com.glints.librarymanagement.repository.BorrowerRepo;
+import com.glints.librarymanagement.repository.EmployeeRepo;
 import com.glints.librarymanagement.repository.MemberRepo;
-import com.glints.librarymanagement.repository.PetugasRepo;
 
 @RestController
 @RequestMapping("/borrower")
@@ -39,7 +39,7 @@ public class BorrowerController {
 	MemberRepo memberRepo;
 
 	@Autowired
-	PetugasRepo employeeRepo;
+	EmployeeRepo employeeRepo;
 
 	@GetMapping(path = "/get", produces = "application/json")
 	public ResponseEntity<?> getAll() {
@@ -62,7 +62,7 @@ public class BorrowerController {
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createBorrow(@RequestBody BorrowerPayload payload) {
 
-		Petugas employee = employeeRepo.findByUserNameIgnoreCase(payload.getEmployee());
+		Employee employee = employeeRepo.findByUserNameIgnoreCase(payload.getEmployee());
 		if (employee == null) {
 			return new ResponseEntity<ErrorResponse>(
 					new ErrorResponse("Employee not found", "Petugas yang anda masukan tidak terdaftar"),
