@@ -8,34 +8,38 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import com.glints.librarymanagement.model.Persistence;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "employee")
-public class User {
+@SQLDelete(sql =
+		"UPDATE employee " +
+        "SET deleted = true " +
+        "WHERE id = ?")
+@Where(clause = "deleted = false")
+public class User extends Persistence{
     @Id
     private int id;
     private String userName;
     private String password;
     private String name;
-//	public User(String userName, String password, String name) {
-//		// TODO Auto-generated constructor stub
-//	}
+
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
     public String getUserName() {
-		// TODO Auto-generated method stub
 		return userName;
 	}
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return password;
 	}
 	public int getId() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 	public void setName(String name) {

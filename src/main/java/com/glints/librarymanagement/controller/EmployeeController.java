@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.glints.librarymanagement.entity.User;
+import com.glints.librarymanagement.model.Employee;
 import com.glints.librarymanagement.payload.EmployeePayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
 import com.glints.librarymanagement.repository.EmployeeRepo;
@@ -26,34 +27,35 @@ public class EmployeeController {
 	EmployeeRepo employeeRepo;
 	@GetMapping(path = "/getall", produces = "application/json")
 	public ResponseEntity<?> getAll(){
-		List <User> employee = employeeRepo.findAll();
-		return new ResponseEntity<List<User>>(employee, HttpStatus.OK);		
+		List <Employee> employee = employeeRepo.findAll();
+		return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);		
 	}
 	
 	@GetMapping(path = "/get/{id}", produces = "application/json")
 	public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
-		Optional<User> employee = employeeRepo.findById(id);
-		return new ResponseEntity<Optional<User>>(employee, HttpStatus.OK);
+		Optional<Employee> employee = employeeRepo.findById(id);
+		return new ResponseEntity<Optional<Employee>>(employee, HttpStatus.OK);
 	}
 	 
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createEmployee(@RequestBody EmployeePayload payload) {
-		User existEmployee = employeeRepo.findByUserNameIgnoreCase(payload.getUserName());
+		Employee existEmployee = employeeRepo.findByNameIgnoreCase(payload.getName());
 		if(existEmployee != null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
 					"Already exist",
-					"Ganti dengan nama lain"),HttpStatus.BAD_REQUEST);							
+					"Ganti dengan nama lain"),HttpStatus.BAD_REQUEST);					
+						
 		}
-		
 		try {
-			User newEmployee = new User(
-					payload.getUserName(), 
+			Employee newEmployee = new Employee(
+					payload.getName(), 
 					payload.getPassword(), 
-					payload.getName());
+					payload.getUserName());
 			employeeRepo.save(newEmployee);
 			payload.setId(newEmployee.getId());
 		} catch (Exception e){
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(					
+					
 					"Error",
 					"Maaf request anda tidak dapat diproses"),HttpStatus.INTERNAL_SERVER_ERROR);					
 				
@@ -63,7 +65,7 @@ public class EmployeeController {
 	
 	@PostMapping(path = "/update/{id}", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createEmployee(@PathVariable("id") Integer id, @RequestBody EmployeePayload payload) {
-		User existEmployee = employeeRepo.findById(id).orElse(null);;
+		Employee existEmployee = employeeRepo.findById(id).orElse(null);;
 		if(existEmployee == null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
 					"Employee not found",
