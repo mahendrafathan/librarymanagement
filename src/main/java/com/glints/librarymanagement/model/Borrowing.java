@@ -16,6 +16,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glints.librarymanagement.entity.User;
 
 @Entity
 @Table(name = "borrowing")
@@ -33,9 +34,9 @@ public class Borrowing extends Persistence {
 	private Member member;
 
 	@JoinColumn(name = "employee_id", nullable = false)
-	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Employee employee;
+	private User employee;
 
 	@JoinColumn(name = "book_id", nullable = false)
 	@ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY)
@@ -57,7 +58,7 @@ public class Borrowing extends Persistence {
 		super();
 	}
 
-	public Borrowing(Long id, Member member, Employee employee, Book book, Date borrowDate, Date returnDate,
+	public Borrowing(Long id, Member member, User employee, Book book, Date borrowDate, Date returnDate,
 			Boolean isReturned) {
 		this.member = member;
 		this.employee = employee;
@@ -83,11 +84,11 @@ public class Borrowing extends Persistence {
 		this.member = member;
 	}
 
-	public Employee getEmployee() {
+	public User getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Employee employee) {
+	public void setEmployee(User employee) {
 		this.employee = employee;
 	}
 

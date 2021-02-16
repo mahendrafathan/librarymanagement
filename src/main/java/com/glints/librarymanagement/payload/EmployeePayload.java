@@ -12,21 +12,21 @@ public class EmployeePayload {
 	@JsonProperty("user_name")
 	private String userName;
 	//GETTER
-	public int getId() {
-		return id;
-	}
-	public String getName() {
-		return name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//	public String getName() {
+//		return name;
+//	}
+//	public String getPassword() {
+//		return password;
+//	}
+//	public String getUserName() {
+//		return userName;
+//	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 		
 	
 }

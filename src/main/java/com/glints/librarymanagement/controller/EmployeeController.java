@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.glints.librarymanagement.model.Employee;
+import com.glints.librarymanagement.entity.User;
 import com.glints.librarymanagement.payload.EmployeePayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
 import com.glints.librarymanagement.repository.EmployeeRepo;
@@ -26,19 +26,19 @@ public class EmployeeController {
 	EmployeeRepo employeeRepo;
 	@GetMapping(path = "/getall", produces = "application/json")
 	public ResponseEntity<?> getAll(){
-		List <Employee> employee = employeeRepo.findAll();
-		return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);		
+		List <User> employee = employeeRepo.findAll();
+		return new ResponseEntity<List<User>>(employee, HttpStatus.OK);		
 	}
 	
 	@GetMapping(path = "/get/{id}", produces = "application/json")
 	public ResponseEntity<?> getById(@PathVariable("id") Integer id) {
-		Optional<Employee> employee = employeeRepo.findById(id);
-		return new ResponseEntity<Optional<Employee>>(employee, HttpStatus.OK);
+		Optional<User> employee = employeeRepo.findById(id);
+		return new ResponseEntity<Optional<User>>(employee, HttpStatus.OK);
 	}
 	 
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createEmployee(@RequestBody EmployeePayload payload) {
-		Employee existEmployee = employeeRepo.findByNameIgnoreCase(payload.getName());
+		User existEmployee = employeeRepo.findByUserNameIgnoreCase(payload.getUserName());
 		if(existEmployee != null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
 					"Already exist",
@@ -46,10 +46,10 @@ public class EmployeeController {
 		}
 		
 		try {
-			Employee newEmployee = new Employee(
-					payload.getName(), 
+			User newEmployee = new User(
+					payload.getUserName(), 
 					payload.getPassword(), 
-					payload.getUserName());
+					payload.getName());
 			employeeRepo.save(newEmployee);
 			payload.setId(newEmployee.getId());
 		} catch (Exception e){
@@ -63,7 +63,7 @@ public class EmployeeController {
 	
 	@PostMapping(path = "/update/{id}", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createEmployee(@PathVariable("id") Integer id, @RequestBody EmployeePayload payload) {
-		Employee existEmployee = employeeRepo.findById(id).orElse(null);;
+		User existEmployee = employeeRepo.findById(id).orElse(null);;
 		if(existEmployee == null) {
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(
 					"Employee not found",

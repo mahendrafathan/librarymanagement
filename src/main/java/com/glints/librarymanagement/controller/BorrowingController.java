@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.glints.librarymanagement.model.Book;
 import com.glints.librarymanagement.model.Borrowing;
-import com.glints.librarymanagement.model.Employee;
+import com.glints.librarymanagement.entity.User;
 import com.glints.librarymanagement.model.Member;
 import com.glints.librarymanagement.payload.BorrowingPayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
 import com.glints.librarymanagement.repository.BookRepo;
 import com.glints.librarymanagement.repository.BorrowingRepo;
-import com.glints.librarymanagement.repository.EmployeeRepo;
+import com.glints.librarymanagement.repository.UserRepository;
 import com.glints.librarymanagement.repository.MemberRepo;
 
 @RestController
@@ -39,7 +39,7 @@ public class BorrowingController {
 	MemberRepo memberRepo;
 
 	@Autowired
-	EmployeeRepo employeeRepo;
+	UserRepository employeeRepo;
 
 	@GetMapping(path = "/get", produces = "application/json")
 	public ResponseEntity<?> getAll() {
@@ -62,7 +62,7 @@ public class BorrowingController {
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createBorrow(@RequestBody BorrowingPayload payload) {
 
-		Employee employee = employeeRepo.findByUserNameIgnoreCase(payload.getEmployee());
+		User employee = employeeRepo.findByUserNameIgnoreCase(payload.getEmployee());
 		if (employee == null) {
 			return new ResponseEntity<ErrorResponse>(
 					new ErrorResponse("Employee not found", "Petugas yang anda masukan tidak terdaftar"),
