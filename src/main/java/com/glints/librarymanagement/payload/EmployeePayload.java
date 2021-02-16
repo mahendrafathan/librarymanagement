@@ -3,6 +3,7 @@ package com.glints.librarymanagement.payload;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.glints.librarymanagement.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeePayload {
+	UserService userService;
 	@JsonProperty("id")
 	private int id;
 	@JsonProperty("name")
@@ -34,13 +36,13 @@ public class EmployeePayload {
 //		return userName;
 //	}
 	
-	public EmployeePayload(int id, String name, String password, String userName) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.password = password;
-		this.userName = userName;
-	}
+//	public EmployeePayload(int id, String name, String password, String userName) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.password = password;
+//		this.userName = userName;
+//	}
 
 	public int getId() {
 		return id;

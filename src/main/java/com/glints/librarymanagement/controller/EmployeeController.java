@@ -19,10 +19,13 @@ import com.glints.librarymanagement.model.Employee;
 import com.glints.librarymanagement.payload.EmployeePayload;
 import com.glints.librarymanagement.payload.ErrorResponse;
 import com.glints.librarymanagement.repository.EmployeeRepo;
+import com.glints.librarymanagement.service.UserService;
 
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
+	@Autowired
+	UserService userService;
 	@Autowired
 	EmployeeRepo employeeRepo;
 	@GetMapping(path = "/getall", produces = "application/json")
@@ -51,8 +54,9 @@ public class EmployeeController {
 					payload.getName(), 
 					payload.getPassword(), 
 					payload.getUserName());
-			employeeRepo.save(newEmployee);
-			payload.setId(newEmployee.getId());
+					userService.save(newEmployee);
+					payload.setId(newEmployee.getId());
+
 		} catch (Exception e){
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse(					
 					
