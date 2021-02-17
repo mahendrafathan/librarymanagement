@@ -34,8 +34,34 @@ public class JwtUtil {
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+//        final Date expiration = this.getExpirationDateFromToken(token);
+//        return expiration.before(this.generateCurrentDate());
     }
-
+//    public Date getExpirationDateFromToken(String token) {
+//        Date expiration;
+//        try {
+//          final Claims claims = this.getClaimsFromToken(token);
+//          expiration = claims.getExpiration();
+//        } catch (Exception e) {
+//          expiration = null;
+//        }
+//        return expiration;
+//      }
+//    private Date generateCurrentDate() {
+//        return new Date(System.currentTimeMillis());
+//      }
+//    private Claims getClaimsFromToken(String token) {
+//        Claims claims;
+//        try {
+//          claims = Jwts.parser()
+//            .setSigningKey(this.secret)
+//            .parseClaimsJws(token)
+//            .getBody();
+//        } catch (Exception e) {
+//          claims = null;
+//        }
+//        return claims;
+//      }
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
@@ -44,7 +70,7 @@ public class JwtUtil {
     private String createToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
