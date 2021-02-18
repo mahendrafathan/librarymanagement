@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeePayload {
-	UserService userService;
+//	UserService userService;
 	@JsonProperty("id")
 	private int id;
 	@JsonProperty("name")
@@ -22,27 +22,7 @@ public class EmployeePayload {
 	private String password;
 	@JsonProperty("user_name")
 	private String userName;
-	//GETTER
-//	public int getId() {
-//		return id;
-//	}
-//	public String getName() {
-//		return name;
-//	}
-//	public String getPassword() {
-//		return password;
-//	}
-//	public String getUserName() {
-//		return userName;
-//	}
-	
-//	public EmployeePayload(int id, String name, String password, String userName) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.password = password;
-//		this.userName = userName;
-//	}
+
 
 	public int getId() {
 		return id;
