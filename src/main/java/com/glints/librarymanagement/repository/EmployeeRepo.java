@@ -2,10 +2,10 @@ package com.glints.librarymanagement.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.glints.librarymanagement.entity.User;
+import com.glints.librarymanagement.model.Employee;
 
-public interface EmployeeRepo extends JpaRepository<User, Integer> {
-	public User findByNameIgnoreCase(String name);
+public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
+	public Employee findByNameIgnoreCase(String name);
 
-	public User findByUserNameIgnoreCase(String userName);
+	public Employee findByUserNameIgnoreCase(String userName);
 }
